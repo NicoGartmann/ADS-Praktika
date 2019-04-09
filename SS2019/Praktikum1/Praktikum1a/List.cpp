@@ -191,7 +191,7 @@ bool List::getFront(int & key)
 		return false;
 	}
 	else {
-	
+		return true; 
 	}
 	
 }
