@@ -135,6 +135,18 @@ void List::insertBack(int key)
 	Einen neuen Knoten mit dem Schlüsselwert key am Ende der Liste einfügen
 */
 
+	if(isEmpty()) {
+		Node* tmp= new Node(key, head_tail, head_tail); 
+        head_tail->next = tmp; 
+        head_tail->prev =tmp; 
+        list_size++;  
+	}
+	else {
+		Node *tmp = new Node(key,head_tail,head_tail->prev); 
+		head_tail->prev->next = tmp; 
+		head_tail->prev = tmp; 
+		list_size++; 
+	}
 
 }
 
