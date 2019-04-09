@@ -252,7 +252,7 @@ bool List::search(int key)
 			tmp= tmp->next;
 		}
 	}
-	return false; 
+	return false;
 }
 
 bool List::swap(int key1, int key2)
@@ -273,7 +273,7 @@ int List::size(void)
 /*
 	Anzahl der Knoten in der Liste zurückgeben.
 */
-	return 0;
+	return list_size+1;
 }
 
 bool List::test(void)
