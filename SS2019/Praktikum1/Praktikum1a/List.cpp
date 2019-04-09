@@ -187,7 +187,13 @@ bool List::getFront(int & key)
 	Der Wert des vorderen Schlüsselknotens wird rückgegeben und der Knoten gelöscht.
 	Die Methode del(key) darf nicht zum löschen benutzt werden.
 */
-	return false;
+	if(isEmpty()) {
+		return false;
+	}
+	else {
+	
+	}
+	
 }
 
 bool List::getBack(int & key)
