@@ -62,21 +62,21 @@ List::~List()
 	hier alle Knoten löschen, die im Objekt List allokiert wurden
 */
 
-    Node* tmp=head_tail; 
+    Node* tmp=head_tail;
     while(tmp!=head_tail->prev) {
-        Node* tmp2=tmp; 
-        tmp = tmp->next; 
-        delete tmp2; 
+        Node* tmp2=tmp;
+        tmp = tmp->next;
+        delete tmp2;
     }
-    delete tmp; 
+    delete tmp;
     delete head_tail;
-    list_size = 0;  
+    list_size = 0;
 
 }
 
-//eigene Hilfsmethode 
+//eigene Hilfsmethode
 bool List::isEmpty() {
-    return list_size==0; 
+    return list_size==0;
 }
 
 void List::insertFront(int key)
@@ -87,26 +87,26 @@ void List::insertFront(int key)
 */
 
     if(isEmpty()) {
-        Node* tmp= new Node(key, head_tail, head_tail); 
-        head_tail->next = tmp; 
-        head_tail->prev =tmp; 
-        list_size++; 
+        Node* tmp= new Node(key, head_tail, head_tail);
+        head_tail->next = tmp;
+        head_tail->prev =tmp;
+        list_size++;
     }
     else {
         Node *tmp= new Node(key, head_tail->next,head_tail);
-        head_tail->next->prev = tmp; 
-        head_tail->next = tmp; 
-        list_size++; 
+        head_tail->next->prev = tmp;
+        head_tail->next = tmp;
+        list_size++;
     }
 }
 
 void List::insertFront(List & _List)
 {
 	// Einfügen einer vorhandenen Liste am Anfang
-	/*	
+	/*
 	Die einzufügenden Knoten werden übernommen (nicht kopiert)
 	Die einzufügende Liste _List ist anschließend leer.
-	Es darf keine Schleife und kein new benutzt werden. 
+	Es darf keine Schleife und kein new benutzt werden.
 	*/
 /*
 	Es wird ein Objekt übergeben in dem Knoten vorhanden sein können.
@@ -120,7 +120,7 @@ void List::insertFront(List * _List)
 	/*
 	Die einzufügenden Knoten werden übernommen (nicht kopiert)
 	Die einzufügende Liste _List ist anschließend leer.
-	Es darf keine Schleife und kein new benutzt werden. 	
+	Es darf keine Schleife und kein new benutzt werden.
 	*/
 /*
 	Es wird ein Objekt übergeben in dem Knoten vorhanden sein können.
@@ -136,16 +136,16 @@ void List::insertBack(int key)
 */
 
 	if(isEmpty()) {
-		Node* tmp= new Node(key, head_tail, head_tail); 
-        head_tail->next = tmp; 
-        head_tail->prev =tmp; 
-        list_size++;  
+		Node* tmp= new Node(key, head_tail, head_tail);
+        head_tail->next = tmp;
+        head_tail->prev =tmp;
+        list_size++;
 	}
 	else {
-		Node *tmp = new Node(key,head_tail,head_tail->prev); 
-		head_tail->prev->next = tmp; 
-		head_tail->prev = tmp; 
-		list_size++; 
+		Node *tmp = new Node(key,head_tail,head_tail->prev);
+		head_tail->prev->next = tmp;
+		head_tail->prev = tmp;
+		list_size++;
 	}
 
 }
@@ -156,7 +156,7 @@ void List::insertBack(List & _List)
 	/*
 	Die einzufügenden Knoten werden übernommen (nicht kopiert)
 	Die einzufügende Liste _List ist anschließend leer.
-	Es darf keine Schleife und kein new benutzt werden. 
+	Es darf keine Schleife und kein new benutzt werden.
 	*/
 /*
 	Es wird ein Objekt übergeben in dem Knoten vorhanden sein können.
@@ -170,7 +170,7 @@ void List::insertBack(List * _List)
 	/*
 	Die einzufügenden Knoten werden übernommen (nicht kopiert)
 	Die einzufügende Liste _List ist anschließend leer.
-	Es darf keine Schleife und kein new benutzt werden. 
+	Es darf keine Schleife und kein new benutzt werden.
 	*/
 /*
 	Es wird ein Objekt übergeben in dem Knoten vorhanden sein können.
@@ -191,9 +191,14 @@ bool List::getFront(int & key)
 		return false;
 	}
 	else {
-		return true; 
+		Node* tmp = head_tail->next;
+		key = tmp->key;
+		head_tail->next->prev = head_tail;
+		head_tail->next = tmp->next;
+		delete tmp; 
+		return true;
 	}
-	
+
 }
 
 bool List::getBack(int & key)
@@ -340,7 +345,7 @@ List & List::operator + (const List & List_Append)
 	if (temp) {										// this ist eine temporäre Liste und kann verändert werden
 		tmp = this;
 	}
-	else {	
+	else {
 		tmp = new List(this);						// this ist keine temporäre Liste -> Kopie erzeugen
 		tmp->temp = true;							// Merker setzten, dass es sich um eine temporäre Liste handelt
 	}
@@ -351,7 +356,7 @@ List & List::operator + (const List & List_Append)
 			tmp_node = tmp_node->next;
 		}
 	}
-	if (List_Append.temp) delete & List_Append;		// wurde eine temporäre Liste übergeben, dann wird diese gelöscht						
+	if (List_Append.temp) delete & List_Append;		// wurde eine temporäre Liste übergeben, dann wird diese gelöscht
 	return *tmp;
 }
 
@@ -376,7 +381,7 @@ List & List::operator + (const List * List_Append)
 			tmp_node = tmp_node->next;
 		}
 	}
-	if (List_Append->temp) delete List_Append;		// wurde eine temporäre Liste übergeben, dann wird diese gelöscht					
+	if (List_Append->temp) delete List_Append;		// wurde eine temporäre Liste übergeben, dann wird diese gelöscht
 	return *tmp;
 }
 
