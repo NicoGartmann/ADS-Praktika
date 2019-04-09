@@ -193,9 +193,10 @@ bool List::getFront(int & key)
 	else {
 		Node* tmp = head_tail->next;
 		key = tmp->key;
-		head_tail->next->prev = head_tail;
+		head_tail->next->next->prev = head_tail;
 		head_tail->next = tmp->next;
-		delete tmp; 
+		delete tmp;
+		list_size--; 
 		return true;
 	}
 
@@ -209,7 +210,19 @@ bool List::getBack(int & key)
 	Der Wert des letzten Schlüsselknotens wird rückgegeben und der Knoten gelöscht.
 	Die Methode del(key) darf nicht zum löschen benutzt werden.
 */
-	return false;
+
+	if(isEmpty()) {
+		return false;
+	}
+	else {
+		Node* tmp= head_tail->prev;
+		key = tmp->key;
+		head_tail->prev->prev->next = head_tail;
+		head_tail->prev = tmp->prev;
+		delete tmp;
+		list_size--;
+		return true;
+	}
 }
 
 bool List::del(int key)
