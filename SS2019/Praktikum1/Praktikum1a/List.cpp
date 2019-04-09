@@ -231,7 +231,57 @@ bool List::del(int key)
 /*
 	Löschen des Knotens mit dem Schlüssel key
 */
-	return false;
+	if(isEmpty()) {
+		return false;
+	}
+	else {
+		//erstens key suchen
+		Node* tmp = head_tail->next;
+		while(tmp!=head_tail) {
+			if(tmp->key == key) {
+				break;
+			}
+			tmp = tmp->next;
+		}
+		if(tmp==head_tail) {
+			return false;
+			//Knoten nicht vorhanden
+		}
+		else {
+			//Fall: ein Knoten in Liste
+			if(tmp->next==head_tail && tmp->prev==head_tail) {
+				head_tail->next=head_tail;
+				head_tail->prev= head_tail;
+				list_size--;
+				delete tmp;
+				return true;
+			}
+			//Fall Knoten erstes Element
+			else if(tmp->prev == head_tail) {
+				head_tail->next->next->prev = head_tail;
+				head_tail->next = tmp->next;
+				list_size--;
+				delete tmp;
+				return true;
+			}
+			//Fall Knoten letztes Element
+			else if(tmp->next == head_tail) {
+				head_tail->prev->prev->next = head_tail;
+				head_tail->prev = tmp->prev;
+				list_size--;
+				delete tmp;
+				return true;
+			}
+			//Fall Knoten iwo in Liste
+			else {
+				tmp->prev->next = tmp->next;
+				tmp->next->prev = tmp->prev;
+				list_size--;
+				delete tmp;
+				return true;
+			}
+		}
+	}
 }
 
 bool List::search(int key)
