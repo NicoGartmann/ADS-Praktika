@@ -196,7 +196,7 @@ bool List::getFront(int & key)
 		head_tail->next->next->prev = head_tail;
 		head_tail->next = tmp->next;
 		delete tmp;
-		list_size--; 
+		list_size--;
 		return true;
 	}
 
@@ -240,7 +240,19 @@ bool List::search(int key)
 /*
 	suchen ob ein Knoten mit dem Schlüssel key existiert.
 */
-	return false;
+	if(isEmpty()) {
+		return false;
+	}
+	else {
+		Node* tmp= head_tail->next;
+		while(tmp!=head_tail) {
+			if(tmp->key ==key) {
+				return true;
+			}
+			tmp= tmp->next;
+		}
+	}
+	return false; 
 }
 
 bool List::swap(int key1, int key2)
