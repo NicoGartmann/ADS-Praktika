@@ -8,21 +8,26 @@
 #include<string>
 #include "catch.hpp"
 #include"RingNode.h"
+using namespace std; 
 
-class Ring{
-	
-	private:
-		// Ihr Code hier:	
+class Ring {
 
-		//
-		////////////////////////////////////
-	public:
-		// Ihr Code hier:
-
-
-		//
-		////////////////////////////////////
-		// friend Funktionen müssen unangetastet bleiben! 
-		friend RingNode * get_anker(Ring& r);
-		friend int get_AnzahlNodes(Ring& r);
+private:
+	// Ihr Code hier:	
+	int AnzahlNodes; 
+	RingNode* anker; 
+	//
+	////////////////////////////////////
+public:
+	// Ihr Code hier:
+	Ring(); 
+	void addNode(string pDescribtion, string pSymbolicData); 
+	bool search(string pDescribtion); 
+	void print(); 
+	//
+	bool isEmpty(); 
+	////////////////////////////////////
+	// friend Funktionen müssen unangetastet bleiben! 
+	friend RingNode * get_anker(Ring& r);
+	friend int get_AnzahlNodes(Ring& r);
 };
