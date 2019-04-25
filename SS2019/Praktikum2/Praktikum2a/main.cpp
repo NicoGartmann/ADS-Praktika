@@ -16,7 +16,7 @@ int main()
 {
 	int result = Catch::Session().run();
 	// Ihr Code hier:
-
+	
 
 
 	//

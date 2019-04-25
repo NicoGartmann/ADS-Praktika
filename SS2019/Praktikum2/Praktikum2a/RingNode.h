@@ -12,18 +12,18 @@ class RingNode {
 private:
 	// Ihr Code hier:
 	int OldAge; 
-	string Describtion; 
+	string Description; 
 	string SymbolicData; 
 	RingNode* next; 
 	//	
 public:
 	// Ihr Code hier:
 	RingNode(); 
-	RingNode(int pOldAge, string pDescribtion, string pSymbolicData); 
+	RingNode(int pOldAge, string pDescription, string pSymbolicData); 
 	int getAge(); 
 	void setAge(int pOldAge); 
-	string getDescribtion(); 
-	void setDescribtion(string pDescribtion); 
+	string getDescription(); 
+	void setDescription(string pDescription); 
 	string getData(); 
 	void setData(string pSymbolicData); 
 	RingNode* getNext(); 

@@ -11,9 +11,9 @@ RingNode::RingNode() {
 
 }
 
-RingNode::RingNode(int pOldAge, string pDescribtion, string pSymbolicData) {
+RingNode::RingNode(int pOldAge, string pDescription, string pSymbolicData) {
 	this->OldAge = pOldAge; 
-	this->Describtion = pDescribtion; 
+	this->Description = pDescription; 
 	this->SymbolicData = pSymbolicData; 
 }
 
@@ -25,12 +25,12 @@ void RingNode::setAge(int pOldAge) {
 	this->OldAge = pOldAge; 
 }
 
-string RingNode::getDescribtion() {
-	return this->Describtion; 
+string RingNode::getDescription() {
+	return this->Description; 
 }
 
-void RingNode::setDescribtion(string pDescribtion) {
-	this->Describtion = pDescribtion; 
+void RingNode::setDescription(string pDescription) {
+	this->Description = pDescription; 
 }
 
 string RingNode::getData() {

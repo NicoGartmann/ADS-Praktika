@@ -21,11 +21,12 @@ private:
 public:
 	// Ihr Code hier:
 	Ring(); 
-	void addNode(string pDescribtion, string pSymbolicData); 
-	bool search(string pDescribtion); 
+	void addNode(string pDescription, string pSymbolicData); 
+	bool search(string pData); 
 	void print(); 
 	//
 	bool isEmpty(); 
+	bool isFull(); 
 	////////////////////////////////////
 	// friend Funktionen müssen unangetastet bleiben! 
 	friend RingNode * get_anker(Ring& r);

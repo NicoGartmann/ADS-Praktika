@@ -10,50 +10,75 @@
 // Ihr Code hier:
 Ring::Ring() {
 	this->anker = new RingNode(); 
+	this->AnzahlNodes = 0; 
 }
 
-void Ring::addNode(string pDescribtion, string pSymbolicData) {
+void Ring::addNode(string pDescription, string pSymbolicData) {
 	//Ring leer 
-	if (isEmpty()) {
-		RingNode* tmp = new RingNode(0, pDescribtion, pSymbolicData);
+	if (this->isEmpty()) {
+		RingNode* tmp = new RingNode(0, pDescription, pSymbolicData);
 		this->anker->setNext(tmp); 
-		tmp->setNext(this->anker); 
-		this->AnzahlNodes++; 
+		tmp->setNext(tmp); 
 	}
 	//Ring voll 
-	else if(this->AnzahlNodes==6){
+	else if(this->isFull()){
+		RingNode* newNode = new RingNode(0,pDescription,pSymbolicData); 
 		RingNode* tmp = new RingNode(); 
-		RingNode* tmp2 = new RingNode(); 
-		while (tmp->getNext() != this->anker->getNext()) {
-			tmp2 = tmp; 
+		tmp = this->anker;
+		for(int i=1; i<=this->AnzahlNodes-1; i++) {
+			tmp = tmp->getNext();
 			tmp->setAge(tmp->getAge() + 1); 
-			tmp = tmp->getNext(); 
 		}
+		delete tmp->getNext(); 
+		this->AnzahlNodes--; 
+		tmp->setNext(newNode); 
+		newNode->setNext(this->anker->getNext()); 
+		this->anker->setNext(newNode); 
 	}
 	//Ring weder voll noch leer 
 	else {
 		RingNode* tmp = new RingNode(); 
-		while (tmp->getNext() != this->anker->getNext()) {
+		tmp = this->anker;
+		for (int i = 1; i <= this->AnzahlNodes; i++) {
+			tmp = tmp->getNext();
 			tmp->setAge(tmp->getAge() + 1); 
-			tmp = tmp->getNext(); 
 		}
-		RingNode* newNode = new RingNode(0, pDescribtion, pSymbolicData); 
+		RingNode* newNode = new RingNode(0, pDescription, pSymbolicData); 
 		tmp->setNext(newNode);
 		newNode->setNext(this->anker->getNext()); 
 		this->anker->setNext(newNode); 
-		this->AnzahlNodes++; 
+		
 	}
+	this->AnzahlNodes++;
 }
 
-bool Ring::search(string pDescribtion) {
-
+bool Ring::search(string pData) {
+	RingNode* tmp = new RingNode(); 
+	tmp = this->anker; 
+	for(int i=1; i<=this->AnzahlNodes; i++) {
+		tmp=tmp->getNext();
+		if (tmp->getData() == pData) {
+			break; 
+		}
+	}
+	return tmp->getData() == pData; 
 }
 
 void Ring::print() {
-
+	RingNode* tmp = new RingNode(); 
+	tmp = this->anker; 
+	for(int i=1; i<=this->AnzahlNodes; i++)  {
+		tmp = tmp->getNext();
+		cout << "Old Age: " << tmp->getAge() << ", Describtion: " << tmp->getDescription() << ", Data: " << tmp->getData() << endl; 
+		cout << "--------------------------" << endl; 
+	}
 }
 //
 bool Ring::isEmpty() {
-	return this->anker->getNext(); 
+	return !(this->anker->getNext()); 
+}
+
+bool Ring::isFull() {
+	return this->AnzahlNodes == 6; 
 }
 ////////////////////////////////////
