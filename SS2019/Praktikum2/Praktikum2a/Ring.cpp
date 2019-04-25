@@ -61,7 +61,14 @@ bool Ring::search(string pData) {
 			break; 
 		}
 	}
-	return tmp->getData() == pData; 
+	if (tmp->getData() == pData) {
+		cout << "+ Gefunden in Backup: OldAge " << tmp->getAge() << ", Description: " << tmp->getDescription() << ", Daten: " << tmp->getData() << endl; 
+		return true; 
+	}
+	else {
+		cout << "+ Datensatz konnte nicht gefunden werden." << endl; 
+		return false; 
+	}
 }
 
 void Ring::print() {

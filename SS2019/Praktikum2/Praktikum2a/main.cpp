@@ -44,13 +44,8 @@ int main()
 		case 2: 
 			cout << "+Nach welchen Daten soll gesucht werden?" << endl; 
 			cout << "?> "; 
-			getline(cin, dat); 
-			if (myRing->search(dat)) {
-				cout << "+ Gefunden in Backup:" << endl; 
-			}
-			else {
-				cout << "+ Datensatz konnte nicht gefunden werden." << endl; 
-			}
+			cin >> dat; 
+			myRing->search(dat); 
 			break; 
 		case 3:
 			myRing->print(); 
@@ -58,8 +53,6 @@ int main()
 			break; 
 		}
 	}
-
-
 	//
 	///////////////////////////////////////
 	system("Pause");
