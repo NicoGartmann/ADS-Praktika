@@ -19,11 +19,16 @@ using namespace std;
 ///////////////////////////////////////
 int main() {
 
-	int result = Catch::Session().run();
+	//int result = Catch::Session().run();
 
 	///////////////////////////////////////
 	// Ihr Code hier:
-
+	Tree* myTree = new Tree(); 
+	myTree->addNode("Nico", 1, 1, 1); 
+	myTree->addNode("Kiara", 2, 2, 2);
+	myTree->addNode("Sassa", 3, 3, 3); 
+	myTree->addNode("Mucky", 0, 0, 0); 
+	myTree->printPreorder(myTree->getFirst()); 
 
 
 	//

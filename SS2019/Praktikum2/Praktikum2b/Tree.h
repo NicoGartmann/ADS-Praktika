@@ -30,6 +30,9 @@ public:
 	void printAll(); 
 	//
 	bool isEmpty(); 
+	TreeNode* srchmax(); 
+	TreeNode* getFirst(); 
+	void printPreorder(TreeNode* tmp); 
 	////////////////////////////////////
 	// friend-Funktionen sind für die Tests erforderlich und müssen unangetastet bleiben! 
 	friend TreeNode * get_anker(Tree& TN);
