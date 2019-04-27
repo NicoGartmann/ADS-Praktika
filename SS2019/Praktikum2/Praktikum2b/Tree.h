@@ -10,25 +10,25 @@
 
 using namespace std;
 
-class Tree{
-	
-	private: 
-		///////////////////////////////////////
-		// Ihr Code hier:	
-			
+class Tree {
+
+private:
+	///////////////////////////////////////
+	// Ihr Code hier:	
 
 
-		//
-		////////////////////////////////////	
-	
-	public:
-		///////////////////////////////////////
-		// Ihr Code hier:	
-		
+
+	//
+	////////////////////////////////////	
+
+public:
+	///////////////////////////////////////
+	// Ihr Code hier:	
 
 
-		//
-		////////////////////////////////////
-		// friend-Funktionen sind für die Tests erforderlich und müssen unangetastet bleiben! 
-		friend TreeNode * get_anker(Tree& TN);
+
+	//
+	////////////////////////////////////
+	// friend-Funktionen sind für die Tests erforderlich und müssen unangetastet bleiben! 
+	friend TreeNode * get_anker(Tree& TN);
 };
