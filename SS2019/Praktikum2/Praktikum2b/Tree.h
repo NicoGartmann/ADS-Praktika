@@ -30,7 +30,8 @@ public:
 	void printAll(); 
 	//
 	bool isEmpty(); 
-	TreeNode* srchmax(); 
+	TreeNode* srchmax(TreeNode* tmp); 
+	TreeNode* srchparmax(TreeNode* tmp); 
 	TreeNode* getFirst(); 
 	void printPreorder(TreeNode* tmp); 
 	////////////////////////////////////

@@ -47,7 +47,65 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
 }
 
 void Tree::deleteNode(int pNodePosID) {
+	if (!this->isEmpty()) {
+		TreeNode* tmp = new TreeNode(); 
+		tmp = this->getFirst();
+		TreeNode* parrent = new TreeNode(); 
+		parrent = this->anker; 
+		while (tmp != nullptr) {
+			if (pNodePosID == tmp->getNodePosID())
+				break; 
+			parrent = tmp; 
+			if (pNodePosID <= tmp->getNodePosID())
+				tmp = tmp->getLeft();
+			else
+				tmp = tmp->getRight(); 
+		}
+		if (tmp != nullptr) {
+			//Key gefunden
+			//1. Fall: tmp ist Blattknoten
+			if (tmp->getRight() == nullptr && tmp->getLeft() == nullptr) {
+				if (parrent->getRight() == tmp)
+					parrent->setRight(nullptr);
+				else
+					parrent->setLeft(nullptr);
+				delete tmp;
+			}
+			//2. Fall: tmp hat ein Kind
+			else if (tmp->getRight() == nullptr || tmp->getLeft() == nullptr) {
+				if (parrent->getRight() == tmp)
+					parrent->setRight(tmp->getRight());
+				else
+					parrent->setLeft(tmp->getLeft());
+				delete tmp;
+			}
+			//3. Fall: tmp hat zwei Kinder 
+			else {
+				TreeNode* maxLTB = new TreeNode();
+				TreeNode* parrentMax = new TreeNode();
+				maxLTB = this->srchmax(tmp->getLeft());
+				if (maxLTB == tmp->getLeft()) {
+					maxLTB->setRight(tmp->getRight());
+				}
+				else {
+					parrentMax = this->srchparmax(tmp->getLeft());
+					maxLTB->setRight(tmp->getRight());
+					maxLTB->setLeft(tmp->getLeft());
+					parrentMax->setRight(nullptr);
+				}
 
+				if (parrent->getRight() == tmp)
+					parrent->setRight(maxLTB);
+				else
+					parrent->setLeft(maxLTB);
+				delete tmp;
+			}
+			cout << "Loeschen erfolgreich." << endl;
+		}
+		else
+			cout << "Loeschen nicht erfolgreich." << endl; 
+	}
+	else cout << "Loeschen nicht erfolgreich." << endl; 
 }
 
 bool Tree::searchNode(string pName) {
@@ -62,11 +120,18 @@ bool Tree::isEmpty() {
 	return !(this->anker->getRight()); 
 }
 
-TreeNode* Tree::srchmax() {
-	TreeNode* tmp = new TreeNode(); 
+TreeNode* Tree::srchmax(TreeNode* tmp) {
 	if (!this->isEmpty()) {
-		tmp = this->anker->getRight(); 
 		while (tmp->getRight() != nullptr) {
+			tmp = tmp->getRight(); 
+		}
+	}
+	return tmp; 
+}
+
+TreeNode* Tree::srchparmax(TreeNode* tmp) {
+	if (!this->isEmpty()) {
+		while (tmp->getRight()->getRight() != nullptr) {
 			tmp = tmp->getRight(); 
 		}
 	}
