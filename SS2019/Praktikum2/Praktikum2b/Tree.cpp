@@ -16,23 +16,23 @@ using namespace std;
 ////////////////////////////////////
 // Ihr Code hier:
 Tree::Tree() {
-	this->anker = new TreeNode(); 
-	this->NodeIDCounter = 0; 
+	this->anker = new TreeNode();
+	this->NodeIDCounter = 0;
 }
 
 void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
-	this->NodeIDCounter++; 
-	int pNodePosID = pAlter + pPLZ + pEinkommen; 
+	this->NodeIDCounter++;
+	int pNodePosID = pAlter + pPLZ + pEinkommen;
 	TreeNode* newNode = new TreeNode(pNodePosID, this->NodeIDCounter, pName, pAlter, pEinkommen, pPLZ);
 	if (this->isEmpty()) {
-		this->anker->setRight(newNode); 
+		this->anker->setRight(newNode);
 	}
 	else {
-		TreeNode* tmp = new TreeNode(); 
-		tmp = this->anker->getRight(); 
-		TreeNode* tmp2 = new TreeNode(); 
-		while (tmp!=nullptr) {
-			tmp2 = tmp; 
+		TreeNode* tmp = new TreeNode();
+		tmp = this->anker->getRight();
+		TreeNode* tmp2 = new TreeNode();
+		while (tmp != nullptr) {
+			tmp2 = tmp;
 			if (pNodePosID <= tmp->getNodePosID()) {
 				tmp = tmp->getLeft();
 			}
@@ -41,28 +41,28 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
 			}
 		}
 		if (pNodePosID <= tmp2->getNodePosID()) {
-			tmp2->setLeft(newNode); 
+			tmp2->setLeft(newNode);
 		}
 		else {
-			tmp2->setRight(newNode); 
+			tmp2->setRight(newNode);
 		}
 	}
 }
 
 void Tree::deleteNode(int pNodePosID) {
 	if (!this->isEmpty()) {
-		TreeNode* tmp = new TreeNode(); 
+		TreeNode* tmp = new TreeNode();
 		tmp = this->getFirst();
-		TreeNode* parrent = new TreeNode(); 
-		parrent = this->anker; 
+		TreeNode* parrent = new TreeNode();
+		parrent = this->anker;
 		while (tmp != nullptr) {
 			if (pNodePosID == tmp->getNodePosID())
-				break; 
-			parrent = tmp; 
+				break;
+			parrent = tmp;
 			if (pNodePosID <= tmp->getNodePosID())
 				tmp = tmp->getLeft();
 			else
-				tmp = tmp->getRight(); 
+				tmp = tmp->getRight();
 		}
 		if (tmp != nullptr) {
 			//Key gefunden
@@ -106,92 +106,95 @@ void Tree::deleteNode(int pNodePosID) {
 			cout << "Loeschen erfolgreich." << endl;
 		}
 		else
-			cout << "Loeschen nicht erfolgreich." << endl; 
+			cout << "Loeschen nicht erfolgreich." << endl;
 	}
-	else cout << "Loeschen nicht erfolgreich." << endl; 
+	else cout << "Loeschen nicht erfolgreich." << endl;
 }
 
 bool Tree::searchNode(string pName) {
-	TreeNode* tmp = new TreeNode(); 
-	tmp = this->getFirst(); 
+	TreeNode* tmp = new TreeNode();
+	tmp = this->getFirst();
 	queue<TreeNode*> q;
-	queue<TreeNode*> res; 
-	if(tmp!=nullptr) {
-		q.push(tmp); 
+	queue<TreeNode*> res;
+	if (tmp != nullptr) {
+		q.push(tmp);
 	}
-	while(!q.empty()) {
-		TreeNode* srch = new TreeNode(); 
-		srch = q.back();
-		q.pop(); 
-		if(srch->getName==pName) {
-			res.push(srch);  
-		} 
-		q.push(srch->getLeft()); 
-		q.push(srch->getRight()); 
-	}
-	
-	if(!res.empty()) {
-		cout << "+ Fundstellen: " << endl; 
-		while(!res.empty()) {
-			TreeNode* found = new TreeNode(); 
-			found = res.back(); 
-			found->print(); 
-			res.pop(); 
+	while (!q.empty()) {
+		TreeNode* srch = new TreeNode();
+		srch = q.front();
+		q.pop();
+		if (srch->getName() == pName) {
+			res.push(srch);
 		}
-		return true; 
+		if(srch->getLeft()) 
+			q.push(srch->getLeft());
+		if(srch->getRight())
+			q.push(srch->getRight());
+	}
+
+	if (!res.empty()) {
+		cout << "+ Fundstellen: " << endl;
+		while (!res.empty()) {
+			TreeNode* found = new TreeNode();
+			found = res.front();
+			found->print();
+			res.pop();
+		}
+		return true;
 	}
 	else {
 		cout << "+ Datensatz konnte nicht gefunden werden." << endl;
-		return false;  
+		return false;
 	}
 }
 
 void Tree::printAll() {
 	//preorder
-	if(this->isEmpty()) {
-		cout << "+ Datensatz ist leer." << endl; 
+	if (this->isEmpty()) {
+		cout << "+ Datensatz ist leer." << endl;
 	}
 	else {
-		TreeNode* tmp = new TreeNode(); 
-		stack<TreeNode*> nodes; 
-		nodes.push(tmp); 
-		while(!nodes.empty()) {
-			TreeNode* print = new TreeNode(); 
-			print = nodes.top(); 
-			print->print(); 
-			nodes.pop(); 
-			if(print->getRight()) 
-				nodes.push(print->getRight()); 
-			if(print->getLeft()) 
-				nodes.push(print->getLeft()); 
+		TreeNode* tmp = new TreeNode();
+		tmp = this->getFirst(); 
+		stack<TreeNode*> nodes;
+		nodes.push(tmp);
+		while (!nodes.empty()) {
+			TreeNode* print = new TreeNode();
+			print = nodes.top();
+			print->print();
+			nodes.pop();
+			if (print->getRight())
+				nodes.push(print->getRight());
+			if (print->getLeft())
+				nodes.push(print->getLeft());
 		}
 	}
 }
 //
 bool Tree::isEmpty() {
-	return !(this->anker->getRight()); 
+	return !(this->anker->getRight());
 }
 
 TreeNode* Tree::srchmax(TreeNode* tmp) {
 	if (!this->isEmpty()) {
 		while (tmp->getRight() != nullptr) {
-			tmp = tmp->getRight(); 
+			tmp = tmp->getRight();
 		}
 	}
-	return tmp; 
+	return tmp;
 }
 
 TreeNode* Tree::srchparmax(TreeNode* tmp) {
 	if (!this->isEmpty()) {
 		while (tmp->getRight()->getRight() != nullptr) {
-			tmp = tmp->getRight(); 
+			tmp = tmp->getRight();
 		}
 	}
-	return tmp; 
+	return tmp;
 }
 
 TreeNode* Tree::getFirst() {
-	return this->anker->getRight(); 
+	return this->anker->getRight();
 }
 
 void Tree::printPreorder(TreeNode* tmp) {

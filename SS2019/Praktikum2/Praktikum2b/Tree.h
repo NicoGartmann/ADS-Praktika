@@ -1,4 +1,4 @@
-/*************************************************
+ï»¿/*************************************************
 * ADS Praktikum 2.2
 * Tree.h
 * Erweiterung um Hilfsattribute und -funktionen gestattet, wenn erforderlich.
@@ -15,26 +15,26 @@ class Tree {
 private:
 	///////////////////////////////////////
 	// Ihr Code hier:	
-	TreeNode* anker; 
-	int NodeIDCounter; 
+	TreeNode* anker;
+	int NodeIDCounter;
 	//
 	////////////////////////////////////	
 
 public:
 	///////////////////////////////////////
 	// Ihr Code hier:	
-	Tree(); 
-	void addNode(string pName, int pAlter, double pEinkommen, int pPLZ); 
+	Tree();
+	void addNode(string pName, int pAlter, double pEinkommen, int pPLZ);
 	void deleteNode(int pNodePosID);
-	bool searchNode(string pName); 
-	void printAll(); 
+	bool searchNode(string pName);
+	void printAll();
 	//
-	bool isEmpty(); 
-	TreeNode* srchmax(TreeNode* tmp); 
-	TreeNode* srchparmax(TreeNode* tmp); 
-	TreeNode* getFirst(); 
-	void printPreorder(TreeNode* tmp); 
+	bool isEmpty();
+	TreeNode* srchmax(TreeNode* tmp);
+	TreeNode* srchparmax(TreeNode* tmp);
+	TreeNode* getFirst();
+	void printPreorder(TreeNode* tmp);
 	////////////////////////////////////
-	// friend-Funktionen sind für die Tests erforderlich und müssen unangetastet bleiben! 
+	// friend-Funktionen sind fï¿½r die Tests erforderlich und mï¿½ssen unangetastet bleiben! 
 	friend TreeNode * get_anker(Tree& TN);
 };

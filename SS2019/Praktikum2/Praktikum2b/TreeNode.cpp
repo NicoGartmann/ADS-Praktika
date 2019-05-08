@@ -11,79 +11,79 @@
 ////////////////////////////////////
 // Ihr Code hier:
 TreeNode::TreeNode() {
-	this->left = nullptr; 
-	this->right = nullptr; 
+	this->left = nullptr;
+	this->right = nullptr;
 }
 
 TreeNode::TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ) {
-	this->NodePosID = pNodePosID; 
-	this->NodeID = pNodeID; 
-	this->Name = pName; 
-	this->Alter = pAlter; 
-	this->Einkommen = pEinkommen; 
-	this->PLZ = pPLZ; 
-	this->left = nullptr; 
+	this->NodePosID = pNodePosID;
+	this->NodeID = pNodeID;
+	this->Name = pName;
+	this->Alter = pAlter;
+	this->Einkommen = pEinkommen;
+	this->PLZ = pPLZ;
+	this->left = nullptr;
 	this->right = nullptr;
 }
 
 int TreeNode::getNodePosID() {
-	return this->NodePosID; 
+	return this->NodePosID;
 }
 
 int TreeNode::getNodeID() {
-	return this->NodeID; 
+	return this->NodeID;
 }
 
 string TreeNode::getName() {
-	return this->Name; 
+	return this->Name;
 }
 
 void TreeNode::setName(string pName) {
-	this->Name = pName; 
+	this->Name = pName;
 }
 
 int TreeNode::getAlter() {
-	return this->Alter; 
+	return this->Alter;
 }
 
 void TreeNode::setAlter(int pAlter) {
-	this->Alter = pAlter; 
+	this->Alter = pAlter;
 }
 
 double TreeNode::getEinkommen() {
-	return this->Einkommen; 
+	return this->Einkommen;
 }
 
 void TreeNode::setEinkommen(double pEinkommen) {
-	this->Einkommen = pEinkommen; 
+	this->Einkommen = pEinkommen;
 }
 
 int TreeNode::getPLZ() {
-	return this->PLZ; 
+	return this->PLZ;
 }
 
 void TreeNode::setPLZ(int pPLZ) {
-	this->PLZ = pPLZ; 
+	this->PLZ = pPLZ;
 }
 
 TreeNode* TreeNode::getLeft() {
-	return this->left; 
+	return this->left;
 }
 
 TreeNode* TreeNode::getRight() {
-	return this->right; 
+	return this->right;
 }
 
 void TreeNode::setLeft(TreeNode* pLeft) {
-	this->left = pLeft; 
+	this->left = pLeft;
 }
 
 void TreeNode::setRight(TreeNode* pRight) {
-	this->right = pRight; 
+	this->right = pRight;
 }
 
 void TreeNode::print() {
-	cout << this->NodeID << " | " << this->Name << " | " << this->Alter << " | " << this->Einkommen << " | " << this->PLZ << " | " << this->NodePosID << " | " << endl; 
+	cout << this->NodeID << " | " << this->Name << " | " << this->Alter << " | " << this->Einkommen << " | " << this->PLZ << " | " << this->NodePosID << " | " << endl;
 }
 //
 ////////////////////////////////////
