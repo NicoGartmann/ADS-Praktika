@@ -8,6 +8,8 @@
 #include <iostream>
 #include <iomanip>
 #include <queue>
+#include <stack>
+
 
 using namespace std;
 
@@ -124,8 +126,8 @@ bool Tree::searchNode(string pName) {
 		if(srch->getName==pName) {
 			res.push(srch);  
 		} 
-		q.push(tmp->getLeft()); 
-		q.push(tmp->getRight()); 
+		q.push(srch->getLeft()); 
+		q.push(srch->getRight()); 
 	}
 	
 	if(!res.empty()) {
@@ -145,7 +147,25 @@ bool Tree::searchNode(string pName) {
 }
 
 void Tree::printAll() {
-	//preorderS
+	//preorder
+	if(this->isEmpty()) {
+		cout << "+ Datensatz ist leer." << endl; 
+	}
+	else {
+		TreeNode* tmp = new TreeNode(); 
+		stack<TreeNode*> nodes; 
+		nodes.push(tmp); 
+		while(!nodes.empty()) {
+			TreeNode* print = new TreeNode(); 
+			print = nodes.top(); 
+			print->print(); 
+			nodes.pop(); 
+			if(print->getRight()) 
+				nodes.push(print->getRight()); 
+			if(print->getLeft()) 
+				nodes.push(print->getLeft()); 
+		}
+	}
 }
 //
 bool Tree::isEmpty() {
