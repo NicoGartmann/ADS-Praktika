@@ -7,6 +7,7 @@
 #include "TreeNode.h"
 #include <iostream>
 #include <iomanip>
+#include <queue>
 
 using namespace std;
 
@@ -109,11 +110,42 @@ void Tree::deleteNode(int pNodePosID) {
 }
 
 bool Tree::searchNode(string pName) {
-	return true; 
+	TreeNode* tmp = new TreeNode(); 
+	tmp = this->getFirst(); 
+	queue<TreeNode*> q;
+	queue<TreeNode*> res; 
+	if(tmp!=nullptr) {
+		q.push(tmp); 
+	}
+	while(!q.empty()) {
+		TreeNode* srch = new TreeNode(); 
+		srch = q.back();
+		q.pop(); 
+		if(srch->getName==pName) {
+			res.push(srch);  
+		} 
+		q.push(tmp->getLeft()); 
+		q.push(tmp->getRight()); 
+	}
+	
+	if(!res.empty()) {
+		cout << "+ Fundstellen: " << endl; 
+		while(!res.empty()) {
+			TreeNode* found = new TreeNode(); 
+			found = res.back(); 
+			found->print(); 
+			res.pop(); 
+		}
+		return true; 
+	}
+	else {
+		cout << "+ Datensatz konnte nicht gefunden werden." << endl;
+		return false;  
+	}
 }
 
 void Tree::printAll() {
-	
+	//preorderS
 }
 //
 bool Tree::isEmpty() {
