@@ -1,5 +1,5 @@
 /*************************************************
-* ADS Praktikum 2.2
+* ADS Praktikum 3
 * TreeNode.h
 * Erweiterung um Hilfsattribute und -funktionen gestattet, wenn erforderlich.
 *************************************************/
@@ -12,14 +12,14 @@ class TreeNode {
 
 private:
 	///////////////////////////////////////
-	// Ihr Code hier:	
+	// Ihr Code hier:
 	int NodePosID;
 	int NodeID;
 	string Name;
 	int Alter;
 	double Einkommen;
 	int PLZ;
-	bool red; 
+	bool red;
 	TreeNode* left;
 	TreeNode* right;
 	//
@@ -40,8 +40,8 @@ public:
 	void setEinkommen(double pEinkommen);
 	int getPLZ();
 	void setPLZ(int pPLZ);
-	bool getRed(); 
-	void setRed(bool pRed); 
+	bool getRed();
+	void setRed(bool pRed);
 	TreeNode* getLeft();
 	TreeNode* getRight();
 	void setLeft(TreeNode* pLeft);

@@ -1,5 +1,5 @@
 /*************************************************
-* ADS Praktikum 2.2
+* ADS Praktikum 3
 * TreeNode.cpp
 * Erweiterung um Hilfsfunktionen gestattet.
 *************************************************/
@@ -13,6 +13,7 @@
 TreeNode::TreeNode() {
 	this->left = nullptr;
 	this->right = nullptr;
+	this->red = true;
 }
 
 TreeNode::TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ) {
@@ -24,6 +25,7 @@ TreeNode::TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double
 	this->PLZ = pPLZ;
 	this->left = nullptr;
 	this->right = nullptr;
+	this->red = true; 
 }
 
 int TreeNode::getNodePosID() {
@@ -67,11 +69,11 @@ void TreeNode::setPLZ(int pPLZ) {
 }
 
 bool TreeNode::getRed() {
-	return this->red; 
+	return this->red;
 }
 
 void TreeNode::setRed(bool pRed) {
-	this->red = pRed; 
+	this->red = pRed;
 }
 
 TreeNode* TreeNode::getLeft() {
