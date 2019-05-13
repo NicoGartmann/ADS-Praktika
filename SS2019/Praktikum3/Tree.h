@@ -26,7 +26,11 @@ public:
 	Tree();
 	void addNode(string pName, int pAlter, double pEinkommen, int pPLZ);
 	bool searchNode(string pName);
-	void printAll();
+	void printLevelOrder();
+
+  bool balanceTree();
+  bool rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
+  bool rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
 	//
 	bool isEmpty();
 	TreeNode* getFirst();
