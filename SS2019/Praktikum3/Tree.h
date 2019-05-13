@@ -28,9 +28,9 @@ public:
 	bool searchNode(string pName);
 	void printLevelOrder();
 
-  bool balanceTree();
-  bool rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
-  bool rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
+  void balanceTree();
+  void rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
+  void rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
 	//
 	bool isEmpty();
 	TreeNode* getFirst();

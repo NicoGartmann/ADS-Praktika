@@ -37,7 +37,10 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
     checkTree = this->anker;
     TreeNode* parrentCheck = new TreeNode();
     parrentCheck = this->anker;
+    TreeNode* tmp = new TreeNode();
+    tmp = this->anker;
     while(srchPos!=nullptr) {
+      tmp = parrentCheck;
       parrentCheck = checkTree;
       checkTree = parrent;
       parrent = srchPos;
@@ -65,6 +68,12 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
           checkTree->setRed(false);
           parrentCheck->setRed(true);
           parrent->setRed(true);
+          if(tmp->getNodePosID()<=checkTree->getNodePosID()) {
+            tmp->setLeft(checkTree);
+          }
+          else {
+            tmp->setRight(checkTree);
+          }
         }
         // 2. Fall: Rechtsrotation
         else if(parrentCheck->getLeft()==checkTree && checkTree->getLeft()== parrent) {
@@ -72,6 +81,12 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
           checkTree->setRed(false);
           parrentCheck->setRed(true);
           parrent->setRed(true);
+          if(tmp->getNodePosID()<=checkTree->getNodePosID()) {
+            tmp->setLeft(checkTree);
+          }
+          else {
+            tmp->setRight(checkTree);
+          }
         }
         //3 . Fall: Rechts-Links-Rotation
         else if(parrentCheck->getRight() == checkTree && checkTree->getLeft()==parrent) {
@@ -80,6 +95,12 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
           parrent->setRed(false);
           parrentCheck->setRed(true);
           checkTree->setRed(true);
+          if(tmp->getNodePosID()<=parrent->getNodePosID()) {
+            tmp->setLeft(parrent);
+          }
+          else {
+            tmp->setRight(parrent);
+          }
         }
         // 4. Fall: Links-Rechts-Rotation
         else if(parrentCheck->getLeft()==checkTree && checkTree->getRight()== parrent) {
@@ -88,6 +109,12 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
           parrent->setRed(false);
           parrentCheck->setRed(true);
           checkTree->setRed(true);
+          if(tmp->getNodePosID()<=parrent->getNodePosID()) {
+            tmp->setLeft(parrent);
+          }
+          else {
+            tmp->setRight(parrent);
+          }
         }
       }
     }
@@ -158,16 +185,19 @@ void Tree::printLevelOrder() {
 	}
 }
 
-bool Tree::balanceTree() {
+void Tree::balanceTree() {
 
 }
 
-bool Tree::rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond) {
+void Tree::rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond) {
+  pFirst->setLeft(pSecond->getRight();
+  pSecond->setRight(pFirst);
 
 }
 
-bool Tree::rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond) {
-
+void Tree::rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond) {
+  pFirst->setRight(pSecond->getLeft());
+  pSecond->setLeft(first); 
 }
 //
 bool Tree::isEmpty() {
