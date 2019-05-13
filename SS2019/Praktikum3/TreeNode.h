@@ -29,7 +29,7 @@ public:
 	///////////////////////////////////////
 	// Ihr Code hier:
 	TreeNode();
-	TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ);
+	TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ, bool pRed);
 	int getNodePosID();
 	int getNodeID();
 	string getName();

@@ -1,4 +1,4 @@
-/*************************************************
+﻿/*************************************************
 * ADS Praktikum 3
 * Tree.h
 * Erweiterung um Hilfsattribute und -funktionen gestattet, wenn erforderlich.
@@ -6,7 +6,7 @@
 #pragma once
 #include <string>
 #include "TreeNode.h"
-#include "catch.h"
+#include "catch.hpp"
 
 using namespace std;
 
@@ -26,11 +26,11 @@ public:
 	Tree();
 	void addNode(string pName, int pAlter, double pEinkommen, int pPLZ);
 	bool searchNode(string pName);
-	void printLevelOrder();
+	void printAll();
 
-  void balanceTree();
-  void rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
-  void rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
+	bool balanceTree();
+	bool rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
+	bool rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
 	//
 	bool isEmpty();
 	TreeNode* getFirst();

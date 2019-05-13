@@ -13,10 +13,9 @@
 TreeNode::TreeNode() {
 	this->left = nullptr;
 	this->right = nullptr;
-	this->red = true;
 }
 
-TreeNode::TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ) {
+TreeNode::TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ, bool pRed) {
 	this->NodePosID = pNodePosID;
 	this->NodeID = pNodeID;
 	this->Name = pName;
@@ -25,7 +24,7 @@ TreeNode::TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double
 	this->PLZ = pPLZ;
 	this->left = nullptr;
 	this->right = nullptr;
-	this->red = true; 
+	this->red = pRed; 
 }
 
 int TreeNode::getNodePosID() {
@@ -93,7 +92,7 @@ void TreeNode::setRight(TreeNode* pRight) {
 }
 
 void TreeNode::print() {
-	cout << this->NodeID << " | " << this->Name << " | " << this->Alter << " | " << this->Einkommen << " | " << this->PLZ << " | " << this->NodePosID << " | " << endl;
+	cout << this->NodeID << " | " << this->Name << " | " << this->Alter << " | " << this->Einkommen << " | " << this->PLZ << " | " << this->NodePosID << " | " << this->red << endl; 
 }
 //
 ////////////////////////////////////
