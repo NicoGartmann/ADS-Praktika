@@ -1,33 +1,36 @@
-/*************************************************
-* ADS Praktikum 3
-* TreeNode.cpp
-* Erweiterung um Hilfsfunktionen gestattet.
-*************************************************/
 #include "TreeNode.h"
 #include <iostream>
-#include <string>
+using namespace std;
 
-
-////////////////////////////////////
-// Ihr Code hier:
-TreeNode::TreeNode() {
-	this->left = nullptr;
-	this->right = nullptr;
+TreeNode::TreeNode(int NodePosID, int NodeID, string Name, int Alter, double Einkommen, int PLZ)
+{
+	this->NodePosID = NodePosID;
+	this->NodeID = NodeID;
+	this->red = true;
+	this->Name = Name;
+	this->Alter = Alter;
+	this->Einkommen = Einkommen;
+	this->PLZ = PLZ;
+	this->left = NULL;
+	this->right = NULL;
+	this->parent = NULL;
 }
 
-TreeNode::TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ, bool pRed) {
-	this->NodePosID = pNodePosID;
-	this->NodeID = pNodeID;
-	this->Name = pName;
-	this->Alter = pAlter;
-	this->Einkommen = pEinkommen;
-	this->PLZ = pPLZ;
-	this->left = nullptr;
-	this->right = nullptr;
-	this->red = pRed; 
+
+TreeNode::~TreeNode()
+{
 }
 
-int TreeNode::getNodePosID() {
+bool TreeNode::getRed() {
+	return this->red;
+}
+
+void TreeNode::setRed(bool red) {
+	this->red = red;
+}
+
+int TreeNode::getNodePosID() 
+{ 
 	return this->NodePosID;
 }
 
@@ -39,40 +42,32 @@ string TreeNode::getName() {
 	return this->Name;
 }
 
-void TreeNode::setName(string pName) {
-	this->Name = pName;
+void TreeNode::setName(string name) {
+	this->Name = name;
 }
 
 int TreeNode::getAlter() {
 	return this->Alter;
 }
 
-void TreeNode::setAlter(int pAlter) {
-	this->Alter = pAlter;
+void TreeNode::setAlter(int alter) {
+	this->Alter = alter;
 }
 
 double TreeNode::getEinkommen() {
 	return this->Einkommen;
 }
 
-void TreeNode::setEinkommen(double pEinkommen) {
-	this->Einkommen = pEinkommen;
+void TreeNode::setEinkommen(double einkommen) {
+	this->Einkommen = einkommen;
 }
 
 int TreeNode::getPLZ() {
 	return this->PLZ;
 }
 
-void TreeNode::setPLZ(int pPLZ) {
-	this->PLZ = pPLZ;
-}
-
-bool TreeNode::getRed() {
-	return this->red;
-}
-
-void TreeNode::setRed(bool pRed) {
-	this->red = pRed;
+void TreeNode::setPLZ(int plz) {
+	this->PLZ = plz;
 }
 
 TreeNode* TreeNode::getLeft() {
@@ -83,16 +78,22 @@ TreeNode* TreeNode::getRight() {
 	return this->right;
 }
 
-void TreeNode::setLeft(TreeNode* pLeft) {
-	this->left = pLeft;
+void TreeNode::setLeft(TreeNode* left) {
+	this->left = left;
 }
 
-void TreeNode::setRight(TreeNode* pRight) {
-	this->right = pRight;
+void TreeNode::setRight(TreeNode* right) {
+	this->right = right;
 }
 
 void TreeNode::print() {
-	cout << this->NodeID << " | " << this->Name << " | " << this->Alter << " | " << this->Einkommen << " | " << this->PLZ << " | " << this->NodePosID << " | " << this->red << endl; 
+	cout << "NodeID:" << this->getNodeID() << ", Name: " << this->getName() << ", Alter: " << this->getAlter() << ", Einkommen " << this->getEinkommen() << ", PLZ: " << this->getPLZ() << ", PosID: " << this->getNodePosID() << endl;
 }
-//
-////////////////////////////////////
+
+void TreeNode::setParent(TreeNode * parent) {
+	this->parent = parent;
+}
+
+TreeNode * TreeNode::getParent() {
+	return this->parent;
+}

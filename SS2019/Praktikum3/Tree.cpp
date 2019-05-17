@@ -1,150 +1,230 @@
-/*************************************************
-* ADS Praktikum 3
-* Tree.cpp
-* Erweiterung um Hilfsfunktionen gestattet.
-*************************************************/
 #include "Tree.h"
-#include "TreeNode.h"
-#include <iostream>
-#include <iomanip>
+#include <string>
 #include <queue>
-#include <stack>
-
-
+#include <iostream>
 using namespace std;
 
-////////////////////////////////////
-// Ihr Code hier:
-Tree::Tree() {
-	this->anker = new TreeNode();
-	this->NodeIDCounter = 0;
+Tree::Tree()
+{
+	this->anker = NULL;
+	this->NodeIDCounter = 1;
 }
 
-void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
-	this->NodeIDCounter++;
-	int pNodePosID = pAlter + pPLZ + pEinkommen;
-	TreeNode* newNode = new TreeNode(pNodePosID, this->NodeIDCounter, pName, pAlter, pEinkommen, pPLZ, true);
-	if (this->isEmpty()) {
-		this->anker->setRight(newNode);
+
+Tree::~Tree()
+{
+	if (!this->anker) return;
+	queue<TreeNode *> q;
+	//Use a queue as processing pipeline
+	q.push(this->anker);
+	while (!q.empty()) {
+		TreeNode * curPos = q.front();
+		q.pop();
+		if (curPos->getLeft()) {
+			q.push(curPos->getLeft());
+		}
+		if (curPos->getRight()) {
+			q.push(curPos->getRight());
+		}
+		delete curPos;
+	} 
+}
+
+void Tree::addNode(string Name, int Alter, double Einkommen, int PLZ) {
+	int pos = Alter + PLZ + (int)Einkommen;
+	TreeNode * newNode = new TreeNode(pos, this->NodeIDCounter, Name, Alter, Einkommen, PLZ);
+	if (anker == NULL) {
 		newNode->setRed(false);
+		this->anker = newNode;
 	}
+	// Assumption: NodePosID must differ
 	else {
-		if (this->balanceTree()) {
-
-			//Einfuegeposition finden 
-			TreeNode* tmp = new TreeNode();
-			TreeNode* parrent = new TreeNode();
-			while (tmp != nullptr) {
-				parrent = tmp;
-				if (pNodePosID <= tmp->getNodePosID()) {
-					tmp = tmp->getLeft();
-				}
-				else {
-					tmp = tmp->getRight();
-				}
-			}
-
-			//einfuegen
-			if (pNodePosID <= parrent->getNodePosID()) {
-				parrent->setLeft(newNode);
+		TreeNode * tmp = this->anker;
+		TreeNode * pParent = this->anker;
+		while (tmp != NULL) {
+			pParent = tmp;
+			if (pos < tmp->getNodePosID()) {
+				tmp = tmp->getLeft();
 			}
 			else {
-				parrent->setRight(newNode);
+				tmp = tmp->getRight();
 			}
 		}
-		else {
-			cout << "Balancieren fehlgeschlagen" << endl; 
+		newNode->setParent(pParent);
+		if (pos < pParent->getNodePosID()) {
+			pParent->setLeft(newNode);
 		}
-
-		if (this->balanceTree()) {
-			cout << "Erfolgreich balanciert" << endl; 
-		}
-		else {
-			cout << "Balancieren nach Einfuegen fehlgeschlagen" << endl; 
-		}
+		else pParent->setRight(newNode);
 	}
+	this->NodeIDCounter++;
+	this->balanceTree(newNode);
 }
 
-
-bool Tree::searchNode(string pName) {
-	TreeNode* tmp = new TreeNode();
-	tmp = this->getFirst();
-	queue<TreeNode*> q;
-	queue<TreeNode*> res;
-	if (tmp != nullptr) {
-		q.push(tmp);
-	}
+bool Tree::searchNode(string name) {
+	if (this->anker == NULL) return false;
+	bool f_flag = false;;
+	queue<TreeNode *> q;
+	q.push(this->anker);
 	while (!q.empty()) {
-		TreeNode* srch = new TreeNode();
-		srch = q.front();
+		TreeNode * curPos = q.front();
+		if (curPos->getName() == name) {
+			f_flag++;
+			cout << "+Fundstellen:" << endl;
+			curPos->print();
+		}
 		q.pop();
-		if (srch->getName() == pName) {
-			res.push(srch);
+		if (curPos->getLeft()) {
+			q.push(curPos->getLeft());
 		}
-		if (srch->getLeft())
-			q.push(srch->getLeft());
-		if (srch->getRight())
-			q.push(srch->getRight());
-	}
-
-	if (!res.empty()) {
-		cout << "+ Fundstellen: " << endl;
-		while (!res.empty()) {
-			TreeNode* found = new TreeNode();
-			found = res.front();
-			found->print();
-			res.pop();
+		if (curPos->getRight()) {
+			q.push(curPos->getRight());
 		}
-		return true;
 	}
-	else {
-		cout << "+ Datensatz konnte nicht gefunden werden." << endl;
-		return false;
-	}
+	return f_flag;
 }
 
 void Tree::printAll() {
-	TreeNode* tmp = new TreeNode();
-	tmp = this->getFirst();
-	queue<TreeNode*> q;
-	if (tmp != nullptr) {
-		q.push(tmp);
-	}
+	if (!this->anker) return;
+	printPreOrder(this->anker);
+}
+
+void Tree::printPreOrder(TreeNode * node) {
+	if (!node) return;
+	cout << node->getNodeID() << " | " << node->getName() << " | " << node->getAlter() << " | " << node->getEinkommen() << " | " << node->getPLZ() << " | " << node->getNodePosID() << endl;
+	printPreOrder(node->getLeft());
+	printPreOrder(node->getRight());
+}
+
+void Tree::printLevelOrder() {
+	if (this->anker == NULL) return;
+	queue<TreeNode *> q;
+	//Use a queue as processing pipeline
+	q.push(this->anker);
 	while (!q.empty()) {
-		TreeNode* srch = new TreeNode();
-		srch = q.front();
+		TreeNode * curPos = q.front();
+		cout << curPos->getNodeID() << " | " << curPos->getName() << " | " << curPos->getAlter() << " | " << curPos->getEinkommen() << " | " << curPos->getPLZ() << " | " << curPos->getNodePosID() << endl;
 		q.pop();
-		srch->print();
-		if (srch->getLeft())
-			q.push(srch->getLeft());
-		if (srch->getRight())
-			q.push(srch->getRight());
+		if (curPos->getLeft()) {
+			q.push(curPos->getLeft());
+		}
+		if (curPos->getRight()) {
+			q.push(curPos->getRight());
+		}
 	}
 }
 
-bool Tree::balanceTree() {
+bool Tree::balanceTree(TreeNode * node) {
+	TreeNode * parent = NULL;
+	TreeNode * grandparent = NULL;
 
+	while ((node != this->anker) && node->getParent()->getRed())
+	{
+		parent = node->getParent();
+		grandparent = parent->getParent();
+
+		//A: Parent of node is left child of Grand-parent of node
+		if (parent == grandparent->getLeft())
+		{
+			TreeNode * uncle = grandparent->getRight();
+
+			//The uncle of node is also red -> Only Recoloring required
+			if (uncle != NULL && uncle->getRed())
+			{
+				grandparent->setRed(true);
+				parent->setRed(false);
+				uncle->setRed(false);
+				node = grandparent;
+			}
+			else
+			{
+				//node is right child of its parent -> Left-rotation required
+				if (node == parent->getRight())
+				{
+					node = parent;
+					rotateTreeLeft(this->anker, node);
+				}
+
+				//node is left child of its parent -> Right-rotation required
+				node->getParent()->setRed(false);
+				node->getParent()->getParent()->setRed(true);
+				rotateTreeRight(this->anker, node->getParent()->getParent());
+			}
+		}
+		else
+		{
+			TreeNode * uncle = grandparent->getLeft();
+
+			//The uncle of node is also red -> Only Recoloring required
+			if (uncle && uncle->getRed())
+			{
+				grandparent->setRed(true);
+				parent->setRed(false);
+				uncle->setRed(false);
+				node = grandparent;
+			}
+			else
+			{
+				//node is left child of its parent -> Right-rotation required
+				if (node == parent->getLeft())
+				{
+					node = parent;
+					rotateTreeRight(this->anker, node);
+				}
+
+				//node is right child of its parent -> Left-rotation required
+				node->getParent()->setRed(false);
+				node->getParent()->getParent()->setRed(true);
+				rotateTreeLeft(this->anker, node->getParent()->getParent());
+			}
+		}
+	}
+	this->anker->setRed(false);
+	return true;
 }
 
-bool Tree::rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond) {
-	pFirst->setLeft(pSecond->getRight());
-	pSecond->setRight(pFirst);
 
+bool Tree::rotateTreeLeft(TreeNode * root, TreeNode * node) {
+	TreeNode * pt_right = node->getRight();
+	//Turn pt_rights subtree into node's right subtree
+	node->setRight(pt_right->getLeft());
+	if(pt_right->getLeft())
+		pt_right->getLeft()->setParent(node);
+	//pt_right's new parent was node's parent
+	pt_right->setParent(node->getParent());
+	//Set the parent to point to pt_right instead of node
+	//First check, if we're at the root
+	if (!node->getParent())
+		this->anker = pt_right;
+	else if (node == node->getParent()->getLeft())
+		//node was the left child
+		node->getParent()->setLeft(pt_right);
+	else
+		//node was the right child
+		node->getParent()->setRight(pt_right);
+
+	pt_right->setLeft(node);
+	node->setParent(pt_right);
+	return true;
 }
 
-bool Tree::rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond) {
-	pFirst->setRight(pSecond->getLeft());
-	pSecond->setLeft(pFirst);
+bool Tree::rotateTreeRight(TreeNode * root, TreeNode * node) {
+	TreeNode * pt_left = node->getLeft();
+	//Turn pt_left's subtree into node's right subtree
+	node->setLeft(pt_left->getRight());
+	if(pt_left->getRight())
+		pt_left->getRight()->setParent(node);
+	//Update pt_left's parents
+	pt_left->setParent(node->getParent());
+	//Set the parent to point to pt_left instead of node
+	//First check if we're at the root
+	if (!node->getParent())
+		this->anker = pt_left;
+	else if (node == node->getParent()->getRight())
+		node->getParent()->setRight(pt_left);
+	else
+		node->getParent()->setLeft(pt_left);
+
+	pt_left->setRight(node);
+	node->setParent(pt_left);
+	return true;
 }
-//
-bool Tree::isEmpty() {
-	return !(this->anker->getRight());
-}
-
-
-TreeNode* Tree::getFirst() {
-	return this->anker->getRight();
-}
-
-
-////////////////////////////////////
