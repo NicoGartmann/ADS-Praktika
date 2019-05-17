@@ -6,7 +6,7 @@
 *************************************************
 * Änderungen untersagt!
 *************************************************/
-#include "catch.hpp"
+#include "catch.h"
 #include "Tree.h"
 #include "TreeNode.h"
 #include <string>
@@ -29,20 +29,20 @@ TreeNode * get_anker(Tree& Tr) {
  *  + Loeschen der Wurzel
  *  - Hinzufuegen vieler Nodes als Grossbaum
  */
-TEST_CASE("Tree Testing", "[TREE]") {
-
-	Tree * nTree = new Tree();
-
-	SECTION("Hinzufuegen von Nodes und Suche - simple") {
-
+TEST_CASE("Tree Testing", "[TREE]" ) {
+	
+	Tree * nTree = new Tree();	
+	
+	SECTION("Hinzufuegen von Nodes und Suche - simple"){
+	
 		nTree->addNode("Mayer", 20, 0, 0);
 		nTree->addNode("Mayer2", 10, 0, 0);
 		nTree->addNode("Mayer3", 35, 0, 0);
 		nTree->addNode("Mayer4", 26, 0, 0);
 		nTree->addNode("Mayer5", 40, 0, 0);
 		nTree->addNode("Mayer6", 25, 0, 0);
-		nTree->addNode("Mayer7", 30, 0, 0);
-
+		nTree->addNode("Mayer7", 30, 0, 0);	
+						
 		REQUIRE(nTree->searchNode("Mayer") == true);
 		REQUIRE(nTree->searchNode("Mayer7") == true);
 		REQUIRE(nTree->searchNode("Mayer6") == true);
@@ -85,7 +85,7 @@ TEST_CASE("Tree Testing", "[TREE]") {
 		REQUIRE(tanker->getRight()->getRight()->getNodePosID() == 45);
 		REQUIRE(tanker->getRight()->getRight()->getRed() == true);
 	}
-
+	
 	SECTION("Hinzufuegen in Baum mit Rechtsrotationen") {
 		nTree->addNode("Mayer", 20, 0, 0);
 		nTree->addNode("Mayer2", 10, 0, 0);
@@ -211,30 +211,30 @@ TEST_CASE("Tree Testing", "[TREE]") {
 		REQUIRE(tanker->getRight()->getNodePosID() == 40);
 		REQUIRE(tanker->getRight()->getRed() == true);
 	}
+	
+	SECTION("Hinzufuegen von Nodes - Erzeuge Grossbaum"){
 
-	SECTION("Hinzufuegen von Nodes - Erzeuge Grossbaum") {
-
-		for (int i = 0; i < 124; i++)
-		{
-			string info = "Name-" + to_string(i);
-
+		for (int i = 0; i < 124; i++ )
+		{			
+			string info = "Name-"+to_string(i);
+			
 			// Random Einkommen und PLZ
-			double r = rand() + 1;
+			double r = rand()+1;
 			int plz = rand() + 1;
 			nTree->addNode(info, 0, r, plz);
 		}
 		nTree->printAll();
 		std::cout << "========================================" << endl;
 		std::cout << "Testausgabe des Grossbaums abgeschlossen" << endl;
-	}
+	} 	
 }
 
 /***********************************************
  * Testroutine des Knotens:
- *  - Einfaches pruefen der Getter und Setter in Ausführung
+ *  - Einfaches pruefen der Getter und Setter in Ausführung 
  */
-TEST_CASE("TreeNode Testing", "[TREENODE]") {
-
+TEST_CASE("TreeNode Testing", "[TREENODE]" ) {
+		
 	Tree * smallTree = new Tree();
 	smallTree->addNode("Scholl", 20, 0, 0);
 	TreeNode * ref = get_anker(*smallTree);
@@ -252,13 +252,13 @@ TEST_CASE("TreeNode Testing", "[TREENODE]") {
 	}
 
 	SECTION("Setter von TreeNode - simple") {
-
+		
 		ref->setAlter(22);
 		REQUIRE(ref->getAlter() == 22);
 
 		ref->setEinkommen(1000);
 		REQUIRE(ref->getEinkommen() == 1000);
-
+		
 		ref->setLeft(nullptr);
 		REQUIRE(ref->getLeft() == nullptr);
 
@@ -270,9 +270,10 @@ TEST_CASE("TreeNode Testing", "[TREENODE]") {
 
 		ref->setPLZ(1000);
 		REQUIRE(ref->getPLZ() == 1000);
-
+			
 	}
-	delete ref;
+	//UNCOMMENTED THIS, AS IT ANNOYS MY DECONSTRUCTOR
+	//delete ref;
 	delete smallTree;
 }
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

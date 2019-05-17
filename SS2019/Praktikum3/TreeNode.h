@@ -1,52 +1,43 @@
-/*************************************************
-* ADS Praktikum 3
-* TreeNode.h
-* Erweiterung um Hilfsattribute und -funktionen gestattet, wenn erforderlich.
-*************************************************/
 #pragma once
 #include <string>
-
 using namespace std;
-
-class TreeNode {
-
+class TreeNode
+{
 private:
-	///////////////////////////////////////
-	// Ihr Code hier:
 	int NodePosID;
 	int NodeID;
+	bool red;
 	string Name;
 	int Alter;
 	double Einkommen;
 	int PLZ;
-	bool red;
-	TreeNode* left;
-	TreeNode* right;
-	//
-	////////////////////////////////////
-
+	TreeNode * left;
+	TreeNode * right;
+	TreeNode * parent;
 public:
-	///////////////////////////////////////
-	// Ihr Code hier:
-	TreeNode();
-	TreeNode(int pNodePosID, int pNodeID, string pName, int pAlter, double pEinkommen, int pPLZ, bool pRed);
+	TreeNode(int NodePosID, int NodeID, string Name, int Alter, double Einkommen, int PLZ);
+	~TreeNode();
 	int getNodePosID();
 	int getNodeID();
 	string getName();
-	void setName(string pName);
+	void setName(string name);
 	int getAlter();
-	void setAlter(int pAlter);
+	void setAlter(int alter);
 	double getEinkommen();
-	void setEinkommen(double pEinkommen);
+	void setEinkommen(double einkommen);
 	int getPLZ();
-	void setPLZ(int pPLZ);
+	void setPLZ(int plz);
+
 	bool getRed();
-	void setRed(bool pRed);
+	void setRed(bool red);
+
+	void setParent(TreeNode * parent);
+	TreeNode * getParent();
+
 	TreeNode* getLeft();
 	TreeNode* getRight();
-	void setLeft(TreeNode* pLeft);
-	void setRight(TreeNode* pRight);
+	void setLeft(TreeNode* left);
+	void setRight(TreeNode* right);
 	void print();
-	//
-	////////////////////////////////////
 };
+

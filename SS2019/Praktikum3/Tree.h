@@ -1,40 +1,26 @@
-﻿/*************************************************
-* ADS Praktikum 3
-* Tree.h
-* Erweiterung um Hilfsattribute und -funktionen gestattet, wenn erforderlich.
-*************************************************/
 #pragma once
-#include <string>
 #include "TreeNode.h"
-#include "catch.hpp"
+#include <string>
 
-using namespace std;
-
-class Tree {
-
-private:
-	///////////////////////////////////////
-	// Ihr Code hier:
-	TreeNode* anker;
+class Tree
+{
+private: 
+	TreeNode * anker;
 	int NodeIDCounter;
-	//
-	////////////////////////////////////
+	void printPreOrder(TreeNode * node);
+	bool rotateTreeRight(TreeNode * n1, TreeNode * n2);
+	bool rotateTreeLeft(TreeNode * n1, TreeNode * n2);
 
 public:
-	///////////////////////////////////////
-	// Ihr Code hier:
 	Tree();
-	void addNode(string pName, int pAlter, double pEinkommen, int pPLZ);
-	bool searchNode(string pName);
+	~Tree();
+	void addNode(string Name, int Alter, double Einkommen, int PLZ);
+	bool searchNode(string name);
 	void printAll();
 
-	bool balanceTree();
-	bool rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
-	bool rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
-	//
-	bool isEmpty();
-	TreeNode* getFirst();
-	////////////////////////////////////
-	// friend-Funktionen sind f�r die Tests erforderlich und m�ssen unangetastet bleiben!
+	bool balanceTree(TreeNode * node);
+	void printLevelOrder();
+
 	friend TreeNode * get_anker(Tree& TN);
 };
+
