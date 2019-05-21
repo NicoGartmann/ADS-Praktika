@@ -28,12 +28,15 @@ public:
 	bool searchNode(string pName);
 	void printAll();
 
-	bool balanceTree();
-	bool rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
-	bool rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
+	void balanceTree(int pNodePosID);
+	void rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond);
+	void rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond);
 	//
 	bool isEmpty();
 	TreeNode* getFirst();
+	bool viererNode(TreeNode* pTmp); 
+	void umfaerben(TreeNode* pTmp); 
+	int balanceNeeded(TreeNode* pTmp); 
 	////////////////////////////////////
 	// friend-Funktionen sind f�r die Tests erforderlich und m�ssen unangetastet bleiben!
 	friend TreeNode * get_anker(Tree& TN);

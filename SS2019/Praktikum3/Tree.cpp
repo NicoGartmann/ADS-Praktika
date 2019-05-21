@@ -29,40 +29,35 @@ void Tree::addNode(string pName, int pAlter, double pEinkommen, int pPLZ) {
 		newNode->setRed(false);
 	}
 	else {
-		if (this->balanceTree()) {
+		//entlang des Suchpfades balancieren
+		this->balanceTree(pNodePosID); 
 
-			//Einfuegeposition finden 
-			TreeNode* tmp = new TreeNode();
-			TreeNode* parrent = new TreeNode();
-			while (tmp != nullptr) {
-				parrent = tmp;
-				if (pNodePosID <= tmp->getNodePosID()) {
-					tmp = tmp->getLeft();
-				}
-				else {
-					tmp = tmp->getRight();
-				}
-			}
-
-			//einfuegen
-			if (pNodePosID <= parrent->getNodePosID()) {
-				parrent->setLeft(newNode);
+		//Einfuegeposition finden 
+		TreeNode* tmp = new TreeNode();
+		tmp = this->getFirst(); 
+		TreeNode* parrent = new TreeNode();
+		parrent = this->anker; 
+		while (tmp != nullptr) {
+			parrent = tmp;
+			if (pNodePosID <= tmp->getNodePosID()) {
+				tmp = tmp->getLeft();
 			}
 			else {
-				parrent->setRight(newNode);
+				tmp = tmp->getRight();
 			}
 		}
+		//einfuegen
+		if (pNodePosID <= parrent->getNodePosID()) {
+			parrent->setLeft(newNode);
+		}
 		else {
-			cout << "Balancieren fehlgeschlagen" << endl; 
+			parrent->setRight(newNode);
 		}
 
-		if (this->balanceTree()) {
-			cout << "Erfolgreich balanciert" << endl; 
-		}
-		else {
-			cout << "Balancieren nach Einfuegen fehlgeschlagen" << endl; 
-		}
+		//erneut balancieren
+		this->balanceTree(pNodePosID);
 	}
+	
 }
 
 
@@ -122,18 +117,71 @@ void Tree::printAll() {
 	}
 }
 
-bool Tree::balanceTree() {
-
+void Tree::balanceTree(int pNodePosID) {
+	TreeNode* tmp = new TreeNode();
+	tmp = this->getFirst();
+	while (tmp != nullptr) {
+		if (this->viererNode(tmp)) {
+			this->umfaerben(tmp);
+		}
+		//rausfinden ob und wenn ja welche Rotation benoetigt wird
+		if (this->balanceNeeded(tmp) == 0) {
+			TreeNode* tmpRight = new TreeNode();
+			tmpRight = tmp->getRight();
+			this->rotateTreeRight(tmp, tmpRight);
+			this->umfaerben(tmpRight); 
+		}
+		else if (this->balanceNeeded(tmp) == 1) {
+			TreeNode* tmpLeft = new TreeNode();
+			tmpLeft = tmp->getLeft();
+			this->rotateTreeLeft(tmp, tmpLeft);
+			this->umfaerben(tmpLeft); 
+		}
+		else if (this->balanceNeeded(tmp) == 2) {
+			TreeNode* tmpRight = new TreeNode();
+			tmpRight = tmp->getRight();
+			TreeNode* tmpRightLeft = new TreeNode();
+			tmpRightLeft = tmpRight->getLeft();
+			this->rotateTreeRight(tmpRight, tmpRightLeft);	
+			this->rotateTreeLeft(tmp, tmpRightLeft);
+			this->umfaerben(tmpRightLeft); 
+		}
+		else if (this->balanceNeeded(tmp) == 3) {
+			TreeNode* tmpLeft = new TreeNode();
+			tmpLeft = tmp->getLeft();
+			TreeNode* tmpLeftRight = new TreeNode();
+			tmpLeftRight = tmpLeft->getRight();
+			this->rotateTreeLeft(tmpLeft, tmpLeftRight);
+			this->rotateTreeRight(tmp, tmpLeftRight);
+			this->umfaerben(tmpLeftRight); 
+		}
+		//weiter den Suchpfad entlang
+		if (pNodePosID <= tmp->getNodePosID()) {
+			tmp = tmp->getLeft();
+		}
+		else {
+			tmp = tmp->getRight();
+		}
+	}
 }
 
-bool Tree::rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond) {
-	pFirst->setLeft(pSecond->getRight());
+void Tree::rotateTreeRight(TreeNode* pFirst, TreeNode* pSecond) {
+	if (pSecond->getRight() != nullptr)
+		pFirst->setLeft(pSecond->getRight());
+	else
+		pFirst->setLeft(nullptr); 
+
 	pSecond->setRight(pFirst);
 
 }
 
-bool Tree::rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond) {
-	pFirst->setRight(pSecond->getLeft());
+void Tree::rotateTreeLeft(TreeNode* pFirst, TreeNode* pSecond) {
+	if (pSecond->getLeft() != nullptr)
+		pFirst->setRight(pSecond->getLeft());
+	else
+		pFirst->setRight(nullptr); 
+
+
 	pSecond->setLeft(pFirst);
 }
 //
@@ -146,5 +194,97 @@ TreeNode* Tree::getFirst() {
 	return this->anker->getRight();
 }
 
+bool Tree::viererNode(TreeNode* pTmp) {
+	if (pTmp->getLeft() != nullptr && pTmp->getRight() != nullptr) {
+		TreeNode* tmpLeft = new TreeNode();
+		TreeNode* tmpRight = new TreeNode();
+		tmpLeft = pTmp->getLeft();
+		tmpRight = pTmp->getRight();
+		return (!pTmp->getRed() && tmpLeft->getRed() && tmpRight->getRed());
+	}
+	return false; 
+}
+
+void Tree::umfaerben(TreeNode* pTmp) {
+	if (pTmp->getLeft() != nullptr && pTmp->getRight() != nullptr) {
+		TreeNode* tmpLeft = new TreeNode();
+		TreeNode* tmpRight = new TreeNode();
+		tmpLeft = pTmp->getLeft();
+		tmpRight = pTmp->getRight();
+		pTmp->setRed(true);
+		tmpLeft->setRed(false);
+		tmpRight->setRed(false);
+	}
+}
+
+int Tree::balanceNeeded(TreeNode* pTmp) {
+	TreeNode* tmpRight = new TreeNode(); 
+	TreeNode* tmpRightRight = new TreeNode(); 
+	TreeNode* tmpLeft = new TreeNode();
+	TreeNode* tmpLeftLeft = new TreeNode(); 
+	TreeNode* tmpRightLeft = new TreeNode(); 
+	TreeNode* tmpLeftRight = new TreeNode(); 
+	if (pTmp->getRight() != nullptr) {
+		tmpRight = pTmp->getRight();
+
+		if (tmpRight->getRight() != nullptr) {
+			tmpRightRight = tmpRight->getRight();
+
+			//Linksrotation - return 1
+			if (!pTmp->getRed() && tmpRight->getRed() && tmpRightRight->getRed()) {
+				return 1;
+			}
+		}
+		else {
+			tmpRightRight = nullptr;
+		}
+
+		if (tmpRight->getLeft() != nullptr) {
+			tmpRightLeft = tmpRight->getLeft();
+			//RechtslinksRotation - return 2
+			if (!pTmp->getRed() && tmpRight->getRed() && tmpRightLeft->getRed()) {
+				return 2;
+			}
+		}
+		else {
+			tmpRightLeft = nullptr;
+		}
+	} 
+	else {
+		tmpRight = nullptr; 
+	}
+
+	if (pTmp->getLeft() != nullptr) {
+		tmpLeft = pTmp->getLeft(); 
+
+		if (tmpLeft->getLeft() != nullptr) {
+			tmpLeftLeft = tmpLeft->getLeft();
+			//Rechtsrotation - return 0
+			if (!pTmp->getRed() && tmpLeft->getRed() && tmpLeftLeft->getRed()) {
+				return 0;
+			}
+			
+		}
+		else {
+			tmpLeftLeft = nullptr;
+		}
+
+		if (tmpLeft->getRight() != nullptr) {
+			tmpLeftRight = tmpLeft->getRight();
+			//LinksRechtsRotation - return 3
+			if (!pTmp->getRed() && tmpLeft->getRed() && tmpLeftRight->getRed()) {
+				return 3;
+			}
+		}
+		else {
+			tmpLeftRight = nullptr;
+		}
+	}
+	else {
+		tmpLeft = nullptr; 
+	}
+	//keine Rotation benötigt - return 4
+	return 4; 
+}
 
 ////////////////////////////////////
