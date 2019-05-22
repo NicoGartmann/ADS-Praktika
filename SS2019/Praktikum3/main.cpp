@@ -26,11 +26,15 @@ int main() {
 	Tree* myTree = new Tree();
 	myTree->addNode("Nico", 1, 1, 1);
 	myTree->addNode("Kiara", 2, 2, 2);
+
 	myTree->addNode("Sassa", 3, 3, 3);
+
 	myTree->addNode("Mucky", 0, 0, 0);
+
 	myTree->addNode("Ashkan", 0, 0, 1);
+
 	myTree->addNode("Georgios", 4, 4, 4);
-	myTree->printAll();
+	myTree->printAll(); 
 	//
 	///////////////////////////////////////
 	system("PAUSE");

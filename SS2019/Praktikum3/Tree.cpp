@@ -119,6 +119,8 @@ void Tree::printAll() {
 
 void Tree::balanceTree(int pNodePosID) {
 	TreeNode* tmp = new TreeNode();
+	TreeNode* parrent = new TreeNode(); 
+	parrent = this->anker; 
 	tmp = this->getFirst();
 	while (tmp != nullptr) {
 		if (this->viererNode(tmp)) {
@@ -126,35 +128,86 @@ void Tree::balanceTree(int pNodePosID) {
 		}
 		//rausfinden ob und wenn ja welche Rotation benoetigt wird
 		if (this->balanceNeeded(tmp) == 0) {
-			TreeNode* tmpRight = new TreeNode();
-			tmpRight = tmp->getRight();
-			this->rotateTreeRight(tmp, tmpRight);
-			this->umfaerben(tmpRight); 
-		}
-		else if (this->balanceNeeded(tmp) == 1) {
+			bool left; 
+			if (parrent->getRight() == tmp) {
+				left = false; 
+			}
+			else left = true; 
 			TreeNode* tmpLeft = new TreeNode();
 			tmpLeft = tmp->getLeft();
-			this->rotateTreeLeft(tmp, tmpLeft);
+			this->rotateTreeRight(tmp, tmpLeft);
+			if (left) {
+				parrent->setLeft(tmpLeft); 
+			}
+			else {
+				parrent->setRight(tmpLeft); 
+			}
 			this->umfaerben(tmpLeft); 
+		}
+		else if (this->balanceNeeded(tmp) == 1) {
+			TreeNode* tmpRight = new TreeNode();
+			bool left; 
+			if (parrent->getLeft() == tmp) {
+				left = true; 
+			}
+			else {
+				left = false; 
+			}
+			tmpRight = tmp->getRight();
+			this->rotateTreeLeft(tmp, tmpRight);
+			if (left) {
+				parrent->setLeft(tmpRight); 
+			}
+			else {
+				parrent->setRight(tmpRight); 
+			}
+			this->umfaerben(tmpRight); 
 		}
 		else if (this->balanceNeeded(tmp) == 2) {
 			TreeNode* tmpRight = new TreeNode();
+			bool left; 
+			if (parrent->getLeft() == tmp) {
+				left = true; 
+			}
+			else {
+				left = false; 
+			}
 			tmpRight = tmp->getRight();
 			TreeNode* tmpRightLeft = new TreeNode();
 			tmpRightLeft = tmpRight->getLeft();
 			this->rotateTreeRight(tmpRight, tmpRightLeft);	
 			this->rotateTreeLeft(tmp, tmpRightLeft);
+			if (left) {
+				parrent->setLeft(tmpRightLeft); 
+			}
+			else {
+				parrent->setRight(tmpRightLeft); 
+			}
 			this->umfaerben(tmpRightLeft); 
 		}
 		else if (this->balanceNeeded(tmp) == 3) {
 			TreeNode* tmpLeft = new TreeNode();
+			bool left; 
+			if (parrent->getLeft() == tmp) {
+				left = true; 
+			}
+			else {
+				left = false; 
+			}
 			tmpLeft = tmp->getLeft();
 			TreeNode* tmpLeftRight = new TreeNode();
 			tmpLeftRight = tmpLeft->getRight();
 			this->rotateTreeLeft(tmpLeft, tmpLeftRight);
 			this->rotateTreeRight(tmp, tmpLeftRight);
+			if (left) {
+				parrent->setRight(tmpLeftRight); 
+			}
+			else {
+				parrent->setLeft(tmpLeftRight); 
+			}
 			this->umfaerben(tmpLeftRight); 
 		}
+		parrent = tmp;
 		//weiter den Suchpfad entlang
 		if (pNodePosID <= tmp->getNodePosID()) {
 			tmp = tmp->getLeft();
@@ -206,15 +259,15 @@ bool Tree::viererNode(TreeNode* pTmp) {
 }
 
 void Tree::umfaerben(TreeNode* pTmp) {
-	if (pTmp->getLeft() != nullptr && pTmp->getRight() != nullptr) {
 		TreeNode* tmpLeft = new TreeNode();
 		TreeNode* tmpRight = new TreeNode();
 		tmpLeft = pTmp->getLeft();
 		tmpRight = pTmp->getRight();
-		pTmp->setRed(true);
-		tmpLeft->setRed(false);
-		tmpRight->setRed(false);
-	}
+			if (tmpLeft != nullptr)
+				tmpLeft->setRed(true);
+			if (tmpRight != nullptr)
+				tmpRight->setRed(true);
+			pTmp->setRed(false);
 }
 
 int Tree::balanceNeeded(TreeNode* pTmp) {
