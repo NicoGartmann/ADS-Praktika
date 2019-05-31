@@ -7,9 +7,40 @@ namespace sorting {
 	// QuickSort *
 	//************      
 	void QuickSort(vector<int> &arr, int left, int right) {
-
+		if (left < right) {
+			int q = partition(arr, left, right); 
+			QuickSort(arr, left, q - 1); 
+			QuickSort(arr, q + 1, right); 
+		}
 	}
 
+	int partition(vector<int> &arr, int left, int right) {
+		int pivot = median(left, right, left / right); 
+		int i = left - 1; 
+		for (int j = right; j < right - 1; j++) {
+			if (arr[j] <= pivot) {
+				i++; 
+				swap(arr[i], arr[j]); 
+				
+			}
+			swap(arr[i+1],arr[right]);
+		}
+		return i + 1; 
+	}
+
+	int median(int left, int right, int middle) {
+		int median; 
+		if (left<=middle && middle >right) {
+			median = middle; 
+		}
+		else if (left > middle && left <= right) {
+			median = left; 
+		}
+		else {
+			median = right; 
+		}
+		return median; 
+	}
 	//************
 	// MergeSort *
 	//************
