@@ -15,18 +15,20 @@ namespace sorting {
 	//************
 	void QuickSort(vector<int> &arr, int left, int right);
 	int partition(vector<int> &arr, int left, int right); 
+	int median(int left, int right, int middle);
+
 	//************
 	// MergeSort *
 	//************
-	void Merge(vector<int> &a, vector<int> &b, int low, int pivot, int high);
-	void MergeSort(vector<int> &a, vector<int> &b, int low, int high);
-	int median(int left, int right, int middle); 
+	void Merge(vector<int> &a, vector<int> &b,int low, int pivot, int high);
+	void MergeSort(vector<int> &a,vector<int>&b, int low, int high);
 
 	//************
 	// Heapsort  *
 	//************
 	void HeapSort(vector<int> &a, int n);
-
+	int leftChild(int i); 
+	void percDown(vector<int> &a, int p, int r); 
 	//************
 	// Shellsort *
 	//************

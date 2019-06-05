@@ -15,11 +15,25 @@ void benchmark_quicksort();
 
 int main(int argc, char** argv) {
 
-	Catch::Session().run();
-	std::cin.get();
+	//Catch::Session().run();
+	//std::cin.get();
+	vector<int>arr; 
+	vector<int>b; 
+	for (int i = 10; i < 20; i += 2) {
+		sorting::randomizeVector(arr, i); 
+		for (int j = 0; j < arr.size() - 1; j++)
+			cout << arr[j] << " "; 
+		cout << endl; 
+		sorting::HeapSort(arr,arr.size()); 
+		cout << endl << "sorted: " << endl; 
+		for (int j = 0; j < arr.size() - 1; j++)
+			cout << arr[j]<< " "; 
+		cout << endl; 
+	}
 
-
-	benchmark_quicksort();
+	//benchmark_quicksort();
+	system("pause"); 
+	return 0; 
 }
 
 
