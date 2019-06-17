@@ -4,7 +4,29 @@
 
 class GraphNode {
 public:
-	struct edge; 
+	struct edge {
+		GraphNode *node; //Destination node
+		double value; //Edge Weight
+		GraphNode *prev; //Vorgänger
+
+		edge() {
+			node = nullptr;
+			value = 0;
+
+		}
+
+		edge(GraphNode * either, GraphNode * other, double val)
+		{
+			prev = either;
+			node = other;
+			value = val;
+		}
+
+		bool operator<(const edge& comp) const
+		{
+			return value > comp.value;
+		}
+	};
 
 private : 
 	int _key;
@@ -19,7 +41,7 @@ public:
 	bool getVisited(); 
 	void setVisited(bool value); 
 	void addEdge(edge value); 
-	edge* getEdge(int value); 
+	//edge* getEdge(int value); 
 	int getNumberOfEdges(); 
 	int getComponent(); 
 	void setComponent(int value); 

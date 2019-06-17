@@ -2,8 +2,8 @@
 #include "graphNode.h"
 #include <vector>
 #include <fstream>
+#include <sstream>
 #include <iostream>
-#include <istream>
 using namespace std; 
 
 
@@ -29,6 +29,6 @@ public:
 	bool breathSearchIter(int startKey); 
 	double prim(int startKey); 
 	double kruskal(); 
-	int getAnzahlKnoten();
+	int getAnzKnoten();
 
 };
