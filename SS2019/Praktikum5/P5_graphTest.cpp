@@ -28,8 +28,8 @@ using namespace std;
 	- Prim mit bestimmten Ergebnissen
 	- Kruskal mit bestimmten Ergebnissen
  */
-TEST_CASE("Graph Testing", "[Graph]" ) {
-	
+TEST_CASE("Graph Testing", "[Graph]") {
+
 	Graph* test1 = new Graph();
 	Graph* test2 = new Graph();
 	Graph* test3 = new Graph();
@@ -37,9 +37,9 @@ TEST_CASE("Graph Testing", "[Graph]" ) {
 	test1->init("graph1.txt");
 	test2->init("graph2.txt");
 	test3->init("graph3.txt");
-	
+
 	SECTION("Tiefensuche mit erstem Graphen") {
-		
+
 		for (int i = 0; i < test1->getAnzKnoten(); i++) {
 			bool test = test1->depthSearchRek(i);
 
@@ -123,7 +123,7 @@ TEST_CASE("Graph Testing", "[Graph]" ) {
 			REQUIRE(value == 39);
 		}
 	}
-	
+
 	SECTION("Kruskal mit zweitem Graph") {
 		for (int i = 0; i < test2->getAnzKnoten(); i++) {
 			int value = test2->kruskal();
